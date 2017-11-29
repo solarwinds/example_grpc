@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+service MetricsBridge{
+  rpc ProcessMetrics (MetricsBatchRequest) returns (MetricsBatchResponse) {}
+}
+
+// Metric represents one pieces of time series data
+message Metric {
+  string name = 1;
+  int64 timestamp = 2;
+  float value = 3;
+}
+
+// MetricsBatch is a collection of metrics sent at one point in time
+message MetricsBatch {
+  repeated Metric metrics = 1;
+  int32 count = 2;
+}
+
+message MetricsBatchRequest{
+  MetricsBatch metricsData = 1;
+  string uuid = 2;
+}
+
+message MetricsBatchResponse{
+  bool ok = 1;
+  string uuid = 2;
+}
